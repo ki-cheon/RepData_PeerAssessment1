@@ -1,8 +1,9 @@
 ---
-title: "Reproducible Research: Peer Assessment 1"
-output: 
+title: 'Reproducible Research: Peer Assessment 1'
+output:
   html_document:
-    keep_md: true
+  keep_md: yes
+  pdf_document: default
 ---
 
 
@@ -37,9 +38,14 @@ for(i in 1:interval_cnt)
     some <- seq(i, nrow(d), by= interval_cnt)
     out2[i] <- mean( d[some,]$steps, na.rm=T)
 }
+```
 
-plot(out2 , type="l")
 
+```{r scatterplot,fig.height=4}
+plot(out2 , type="l", main="average daily activity pattern")
+```
+
+```{r}
 max_interal <- max(out2)
 ```
 
@@ -56,8 +62,6 @@ for(i in 1:nrow(d2) )
 }
 ```
 
-
-
 ## Are there differences in activity patterns between weekdays and weekends?
 ```{r}
 out3 <- ddply(d2, c("date"),summarize, steps=sum(steps))
@@ -67,10 +71,13 @@ weekend_n <- 0
 
 weekdays_sum <-0
 weekend_sum <- 0
+
+Sys.setlocale("LC_TIME", "English")
+
 for(i in 1:nrow(out3))
 {
-    if( weekdays( as.Date(out3[i,1])) == "À¿À" || 
-        weekdays( as.Date(out3[i,1])) == "Å¿À")
+    if( weekdays( as.Date(out3[i,1])) == "Sunday" || 
+        weekdays( as.Date(out3[i,1])) == "Saturday")
     {
        weekend_n <- weekend_n +1 
        weekend_sum <- weekend_sum + out3[i,2]
@@ -88,10 +95,4 @@ for(i in 1:nrow(out3))
 print( weekend_sum / weekend_n )
 print( weekdays_sum / weekdays_n )
 ```
-
-
-
-
-
-
 
