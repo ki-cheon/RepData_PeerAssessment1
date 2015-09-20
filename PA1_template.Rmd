@@ -7,10 +7,13 @@ output:
 
 
 ## Loading and preprocessing the data
+```{r}
 d <- read.csv('activity.csv')
+```
 
 
 ## What is mean total number of steps taken per day?
+```{r}
 library(plyr)
 out <- ddply(d, c("date"),summarize, steps=sum(steps))
 n <- nrow(out)
@@ -19,9 +22,11 @@ median_val <- median(out$steps, na.rm=T)
 
 mean_val
 median_val 
+```
 
 ## What is the average daily activity pattern?
 
+```{r}
 days <- nrow(out)
 interval_cnt <- 24*60/5   
 
@@ -36,8 +41,10 @@ for(i in 1:interval_cnt)
 plot(out2 , type="l")
 
 max_interal <- max(out2)
+```
 
 ## Imputing missing values
+```{r}
 d2 <- d
 for(i in 1:nrow(d2) )
 {
@@ -47,10 +54,12 @@ for(i in 1:nrow(d2) )
 
     }
 }
+```
 
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
+```{r}
 out3 <- ddply(d2, c("date"),summarize, steps=sum(steps))
 
 weekdays_n <- 0
@@ -78,6 +87,7 @@ for(i in 1:nrow(out3))
 # print average steps in weekend & weekdays
 print( weekend_sum / weekend_n )
 print( weekdays_sum / weekdays_n )
+```
 
 
 
